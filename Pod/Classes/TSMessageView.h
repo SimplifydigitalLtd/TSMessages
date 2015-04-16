@@ -17,6 +17,9 @@
 @interface TSMessageView : UIView
 
 /** The displayed title of this message */
+@property (nonatomic, readonly) UIView *backgroundView;
+
+/** The displayed title of this message */
 @property (nonatomic, readonly) NSString *title;
 
 /** The displayed subtitle of this message */

@@ -207,6 +207,7 @@ canBeDismissedByUser:(BOOL)dismissingEnabled
         self.buttonCallback = buttonCallback;
         
         CGFloat screenWidth = self.viewController.view.bounds.size.width;
+		CGFloat screenHeight = self.viewController.view.bounds.size.height;
         CGFloat padding = [self padding];
         
         NSDictionary *current;
@@ -240,6 +241,10 @@ canBeDismissedByUser:(BOOL)dismissingEnabled
         }
         
         current = [notificationDesign valueForKey:currentString];
+		
+		_backgroundView = [UIView new];
+		_backgroundView.backgroundColor = [UIColor clearColor];
+		[self addSubview:_backgroundView];
         
         
         if (!image && [[current valueForKey:@"imageName"] length])
@@ -273,7 +278,7 @@ canBeDismissedByUser:(BOOL)dismissingEnabled
         
         
         self.textSpaceLeft = 2 * padding;
-        if (image) self.textSpaceLeft += image.size.width + 2 * padding;
+        if (image) self.textSpaceLeft += image.size.width;
         
         // Set up title label
         _titleLabel = [[UILabel alloc] init];
@@ -326,7 +331,7 @@ canBeDismissedByUser:(BOOL)dismissingEnabled
         if (image)
         {
             _iconImageView = [[UIImageView alloc] initWithImage:image];
-            self.iconImageView.frame = CGRectMake(padding * 2,
+            self.iconImageView.frame = CGRectMake(padding,
                                                   padding,
                                                   image.size.width,
                                                   image.size.height);
@@ -341,12 +346,12 @@ canBeDismissedByUser:(BOOL)dismissingEnabled
             
             UIImage *buttonBackgroundImage = [UIImage imageNamed:[current valueForKey:@"buttonBackgroundImageName"]];
             
-            buttonBackgroundImage = [buttonBackgroundImage resizableImageWithCapInsets:UIEdgeInsetsMake(15.0, 12.0, 15.0, 11.0)];
+            buttonBackgroundImage = [buttonBackgroundImage resizableImageWithCapInsets:UIEdgeInsetsMake(5.0, 5.0, 5.0, 5.0)];
             
             if (!buttonBackgroundImage)
             {
                 buttonBackgroundImage = [UIImage imageNamed:[current valueForKey:@"NotificationButtonBackground"]];
-                buttonBackgroundImage = [buttonBackgroundImage resizableImageWithCapInsets:UIEdgeInsetsMake(15.0, 12.0, 15.0, 11.0)];
+                buttonBackgroundImage = [buttonBackgroundImage resizableImageWithCapInsets:UIEdgeInsetsMake(5.0, 12.0, 5.0, 11.0)];
             }
             
             [self.button setBackgroundImage:buttonBackgroundImage forState:UIControlStateNormal];
@@ -374,12 +379,13 @@ canBeDismissedByUser:(BOOL)dismissingEnabled
                             action:@selector(buttonTapped:)
                   forControlEvents:UIControlEventTouchUpInside];
             
-            self.button.contentEdgeInsets = UIEdgeInsetsMake(0.0, 5.0, 0.0, 5.0);
+            self.button.contentEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0);
             [self.button sizeToFit];
-            self.button.frame = CGRectMake(screenWidth - padding - self.button.frame.size.width,
+			CGFloat buttonWidth = self.button.frame.size.width - 40;
+            self.button.frame = CGRectMake(screenWidth - padding - buttonWidth,
                                            0.0,
-                                           self.button.frame.size.width,
-                                           31.0);
+                                           buttonWidth,
+                                           30.0);
             
             [self addSubview:self.button];
             
@@ -408,8 +414,9 @@ canBeDismissedByUser:(BOOL)dismissingEnabled
             topPosition = self.viewController.view.bounds.size.height;
         }
         
-        self.frame = CGRectMake(0.0, topPosition, screenWidth, actualHeight);
-        
+		self.backgroundView.frame = CGRectMake(0.0, topPosition, screenWidth, actualHeight);
+		self.frame = CGRectMake(0.0, topPosition, screenWidth, screenHeight);
+		
         if (self.messagePosition == TSMessageNotificationPositionTop)
         {
             self.autoresizingMask = UIViewAutoresizingFlexibleWidth;
@@ -447,6 +454,7 @@ canBeDismissedByUser:(BOOL)dismissingEnabled
 {
     CGFloat currentHeight;
     CGFloat screenWidth = self.viewController.view.bounds.size.width;
+	CGFloat screenHeight = self.viewController.view.bounds.size.height;
     CGFloat padding = [self padding];
     
     self.titleLabel.frame = CGRectMake(self.textSpaceLeft,
@@ -459,7 +467,7 @@ canBeDismissedByUser:(BOOL)dismissingEnabled
     {
         self.contentLabel.frame = CGRectMake(self.textSpaceLeft,
                                              self.titleLabel.frame.origin.y + self.titleLabel.frame.size.height + 5.0,
-                                             screenWidth - padding - self.textSpaceLeft - self.textSpaceRight,
+                                             screenWidth - 5 - self.textSpaceLeft - self.textSpaceRight,
                                              0.0);
         [self.contentLabel sizeToFit];
         
@@ -502,13 +510,14 @@ canBeDismissedByUser:(BOOL)dismissingEnabled
     
     currentHeight += self.borderView.frame.size.height;
     
-    self.frame = CGRectMake(0.0, self.frame.origin.y, self.frame.size.width, currentHeight);
-    
+	self.backgroundView.frame = CGRectMake(0.0, self.frame.origin.y, self.frame.size.width, currentHeight);
+	self.frame = CGRectMake(0.0, self.frame.origin.y, self.frame.size.width, screenHeight);
+	
     
     if (self.button)
     {
         self.button.frame = CGRectMake(self.frame.size.width - self.textSpaceRight,
-                                       round((self.frame.size.height / 2.0) - self.button.frame.size.height / 2.0),
+                                       round((currentHeight / 2.0) - self.button.frame.size.height / 2.0),
                                        self.button.frame.size.width,
                                        self.button.frame.size.height);
     }
