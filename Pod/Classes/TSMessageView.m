@@ -611,9 +611,7 @@ canBeDismissedByUser:(BOOL)dismissingEnabled
 
 #pragma mark - Grab Image From Pod Bundle
 - (UIImage *)bundledImageNamed:(NSString*)name{
-    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-    NSString *imagePath = [bundle pathForResource:name ofType:nil];
-    return [[UIImage alloc] initWithContentsOfFile:imagePath];
+    return [UIImage imageNamed:name];
 }
 
 @end
