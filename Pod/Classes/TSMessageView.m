@@ -381,7 +381,7 @@ canBeDismissedByUser:(BOOL)dismissingEnabled
             
             self.button.contentEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0);
             [self.button sizeToFit];
-			CGFloat buttonWidth = self.button.frame.size.width - 40;
+			CGFloat buttonWidth = self.button.frame.size.width + 40;
             self.button.frame = CGRectMake(screenWidth - padding - buttonWidth,
                                            0.0,
                                            buttonWidth,
@@ -611,7 +611,10 @@ canBeDismissedByUser:(BOOL)dismissingEnabled
 
 #pragma mark - Grab Image From Pod Bundle
 - (UIImage *)bundledImageNamed:(NSString*)name{
-    return [UIImage imageNamed:name];
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    NSString *imagePath = [bundle pathForResource:name ofType:nil];
+
+    return [[UIImage alloc] initWithContentsOfFile:imagePath];
 }
 
 @end
