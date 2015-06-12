@@ -19,7 +19,6 @@
     
     [TSMessage setDefaultViewController:self];
     [TSMessage setDelegate:self];
-    self.wantsFullScreenLayout = YES;
     [self.navigationController.navigationBar setTranslucent:YES];
 }
 
@@ -82,8 +81,7 @@
 
 - (IBAction)didTapToggleWantsFullscreen:(id)sender
 {
-    self.wantsFullScreenLayout = !self.wantsFullScreenLayout;
-    [self.navigationController.navigationBar setTranslucent:!self.navigationController.navigationBar.isTranslucent];
+    [self.navigationController.navigationBar setTranslucent:YES];
 }
 
 - (IBAction)didTapCustomImage:(id)sender
