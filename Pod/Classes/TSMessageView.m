@@ -84,6 +84,10 @@ static NSMutableDictionary *_notificationDesign;
 -(void) setButtonFont:(UIFont *)buttonFont{
     _buttonFont = buttonFont;
     self.button.titleLabel.font = self.buttonFont;
+    [self.button sizeToFit];
+    CGFloat buttonWidth = self.button.frame.size.width + 40;
+    self.button.frame = CGRectMake(0, 0, buttonWidth, buttonFont.pointSize * 2);
+    self.textSpaceRight = self.button.frame.size.width + self.padding;
 }
 
 -(void) setMessageIcon:(UIImage *)messageIcon{
@@ -212,7 +216,7 @@ canBeDismissedByUser:(BOOL)dismissingEnabled
         self.buttonCallback = buttonCallback;
         
         CGFloat screenWidth = self.viewController.view.bounds.size.width;
-		CGFloat screenHeight = self.viewController.view.bounds.size.height;
+        CGFloat screenHeight = self.viewController.view.bounds.size.height;
         CGFloat padding = [self padding];
         
         NSDictionary *current;
@@ -246,10 +250,10 @@ canBeDismissedByUser:(BOOL)dismissingEnabled
         }
         
         current = [notificationDesign valueForKey:currentString];
-		
-		_backgroundView = [UIView new];
-		_backgroundView.backgroundColor = [UIColor clearColor];
-		[self addSubview:_backgroundView];
+        
+        _backgroundView = [UIView new];
+        _backgroundView.backgroundColor = [UIColor clearColor];
+        [self addSubview:_backgroundView];
         
         
         if (!image && [[current valueForKey:@"imageName"] length])
@@ -386,7 +390,7 @@ canBeDismissedByUser:(BOOL)dismissingEnabled
             
             self.button.contentEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0);
             [self.button sizeToFit];
-			CGFloat buttonWidth = self.button.frame.size.width + 40;
+            CGFloat buttonWidth = self.button.frame.size.width + 40;
             self.button.frame = CGRectMake(screenWidth - padding - buttonWidth,
                                            0.0,
                                            buttonWidth,
@@ -419,9 +423,9 @@ canBeDismissedByUser:(BOOL)dismissingEnabled
             topPosition = self.viewController.view.bounds.size.height;
         }
         
-		self.backgroundView.frame = CGRectMake(0.0, topPosition, screenWidth, actualHeight);
-		self.frame = CGRectMake(0.0, topPosition, screenWidth, screenHeight);
-		
+        self.backgroundView.frame = CGRectMake(0.0, topPosition, screenWidth, actualHeight);
+        self.frame = CGRectMake(0.0, topPosition, screenWidth, screenHeight);
+        
         if (self.messagePosition == TSMessageNotificationPositionTop)
         {
             self.autoresizingMask = UIViewAutoresizingFlexibleWidth;
@@ -459,7 +463,7 @@ canBeDismissedByUser:(BOOL)dismissingEnabled
 {
     CGFloat currentHeight;
     CGFloat screenWidth = self.viewController.view.bounds.size.width;
-	CGFloat screenHeight = self.viewController.view.bounds.size.height;
+    CGFloat screenHeight = self.viewController.view.bounds.size.height;
     CGFloat padding = [self padding];
     
     self.titleLabel.frame = CGRectMake(self.textSpaceLeft,
@@ -515,9 +519,9 @@ canBeDismissedByUser:(BOOL)dismissingEnabled
     
     currentHeight += self.borderView.frame.size.height;
     
-	self.backgroundView.frame = CGRectMake(0.0, self.frame.origin.y, self.frame.size.width, currentHeight);
-	self.frame = CGRectMake(0.0, self.frame.origin.y, self.frame.size.width, screenHeight);
-	
+    self.backgroundView.frame = CGRectMake(0.0, self.frame.origin.y, self.frame.size.width, currentHeight);
+    self.frame = CGRectMake(0.0, self.frame.origin.y, self.frame.size.width, screenHeight);
+    
     
     if (self.button)
     {
