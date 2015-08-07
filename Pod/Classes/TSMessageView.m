@@ -81,6 +81,11 @@ static NSMutableDictionary *_notificationDesign;
     [self.titleLabel setTextColor:_titleTextColor];
 }
 
+-(void) setButtonFont:(UIFont *)buttonFont{
+    _buttonFont = buttonFont;
+    self.button.titleLabel.font = self.buttonFont;
+}
+
 -(void) setMessageIcon:(UIImage *)messageIcon{
     _messageIcon = messageIcon;
     [self updateCurrentIcon];
