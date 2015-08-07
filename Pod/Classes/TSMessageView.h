@@ -42,6 +42,7 @@
 @property (nonatomic,strong) UIColor *titleTextColor UI_APPEARANCE_SELECTOR;
 @property (nonatomic,strong) UIFont *contentFont UI_APPEARANCE_SELECTOR;
 @property (nonatomic,strong) UIColor *contentTextColor UI_APPEARANCE_SELECTOR;
+@property (nonatomic,strong) UIFont *buttonFont UI_APPEARANCE_SELECTOR;
 @property (nonatomic,strong) UIImage *messageIcon UI_APPEARANCE_SELECTOR;
 @property (nonatomic,strong) UIImage *errorIcon UI_APPEARANCE_SELECTOR;
 @property (nonatomic,strong) UIImage *successIcon UI_APPEARANCE_SELECTOR;
